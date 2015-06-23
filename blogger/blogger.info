@@ -1,0 +1,6 @@
+name = Blogger
+description = Module to enable Blog Content types. This module is a part of Saagar Theme Package.
+core = 7.x
+package = Saagar
+
+

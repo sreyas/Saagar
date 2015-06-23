@@ -1,0 +1,85 @@
+<?php
+/**
+ * @file
+ * Install, update, and uninstall functions for the testimonial.
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function testimonial_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'testimonial'),
+  );
+}
+/**
+ * Implements hook_views_default_views().
+ */
+function testimonial_views_default_views() {
+  return testimonial_all();
+}
+/**
+ * Begin view.
+ */
+function testimonial_all() {
+  include_once 'testimonial_view.inc';
+  $views[$view->name] = $view;
+  return $views;
+}
+/**
+ * Implements hook_menu().
+ */
+function testimonial_menu() {
+  $items = array();
+  $items['testimonial'] = array(
+    'title' => 'Testimonial',
+    'access arguments' => array('access content'),
+    'page callback' => 'testimonial_default_page',
+    'page arguments' => array(1),
+    'type' => MENU_CALLBACK,
+    'description' => 'Testimonial Item',
+  );
+  return $items;
+}
+/**
+ * Implementation of testimonial theme.
+ */
+function testimonial_theme($existing, $type, $theme, $path) {
+  return array(
+    'testimonial_4c' => array(
+      'variables' => array('nodes' => NULL),
+      'template' => 'templates/testimonial4c',
+    ),
+    'testimonial_3c' => array(
+      'variables' => array('nodes' => NULL),
+      'template' => 'templates/testimonial3c',
+    ),
+    'testimonial_2c' => array(
+      'variables' => array('nodes' => NULL),
+      'template' => 'templates/testimonial2c',
+    ),
+    'testimonial_1c' => array(
+      'variables' => array('nodes' => NULL),
+      'template' => 'templates/testimonial1c',
+    ),
+  );
+}
+/**
+ * Implementation of testimonial default pages.
+ */
+function testimonial_default_page() {
+  $layout_value = theme_get_setting('show_default_testimonial_link', 'saagar');
+  if ($layout_value == '1c') {
+    return theme('testimonial_1c');
+  }
+  elseif ($layout_value == '2c') {
+    return theme('testimonial_2c');
+  }
+  elseif ($layout_value == '3c') {
+    return theme('testimonial_3c');
+  }
+  elseif ($layout_value == '4c') {
+    return theme('testimonial_4c');
+  }
+}

@@ -1,0 +1,4 @@
+name = Portfolio Item
+description = Module to create Portfolio Content type and its fields. This module is a part of Saagar Theme Package.
+core = 7.x
+package = Saagar

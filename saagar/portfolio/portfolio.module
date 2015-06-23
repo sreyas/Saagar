@@ -1,0 +1,91 @@
+<?php
+/**
+ * @file
+ * Import view and set menu for portfolio module.
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function portfolio_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'portfolio'),
+  );
+}
+
+/**
+ * Implements hook_views_default_views().
+ */
+function portfolio_views_default_views() {
+  return portfolio_all();
+}
+
+/**
+ * Begin view.
+ */
+function portfolio_all() {
+  include_once 'portfolio_view.inc';
+  $views[$view->name] = $view;
+  return $views;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function portfolio_menu() {
+
+  $items = array();
+
+  $items['portfolio'] = array(
+    'title' => 'Portfolio',
+    'access arguments' => array('access content'),
+    'page callback' => 'portfolio_default_page',
+    'page arguments' => array(1),
+    'type' => MENU_CALLBACK,
+    'description' => 'Portfolio Item',
+  );
+  return $items;
+}
+/**
+ * Returns layout array for portfolio.
+ */
+function portfolio_theme($existing, $type, $theme, $path) {
+  return array(
+    'portfolio_4c' => array(
+      'variables' => array('nodes' => NULL),
+      'template' => 'templates/portfolio4c',
+    ),
+    'portfolio_3c' => array(
+      'variables' => array('nodes' => NULL),
+      'template' => 'templates/portfolio3c',
+    ),
+    'portfolio_2c' => array(
+      'variables' => array('nodes' => NULL),
+      'template' => 'templates/portfolio2c',
+    ),
+    'portfolio_1c' => array(
+      'variables' => array('nodes' => NULL),
+      'template' => 'templates/portfolio1c',
+    ),
+  );
+}
+
+/**
+ * Returns layout for portfolio according to choosen option in theme settings.
+ */
+function portfolio_default_page() {
+  $layout_value = theme_get_setting('default_portfolio', 'saagar');
+  if ($layout_value == '1c') {
+    return theme('portfolio_1c');
+  }
+  elseif ($layout_value == '2c') {
+    return theme('portfolio_2c');
+  }
+  elseif ($layout_value == '3c') {
+    return theme('portfolio_3c');
+  }
+  elseif ($layout_value == '4c') {
+    return theme('portfolio_4c');
+  }
+}

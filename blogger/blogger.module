@@ -1,0 +1,70 @@
+<?php
+/**
+ * @file
+ * Add fileds to blog content type.
+ */
+
+/**
+ * Implements include once
+ */
+include_once 'bloggerviews.inc';
+/**Blog Page tpl**/
+
+ /**
+  * Implements hook_menu().
+  */
+function blogger_menu() {
+  $items = array();
+  $items['myblog'] = array(
+    'title' => 'Blog page',
+    'page callback' => 'blog_page11',
+    'access arguments' => array('access content'),
+    'description' => 'This is a blog',
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+  /**
+   * Implements hook_theme().
+   */
+function blogger_theme() {
+  return array(
+    's_1' => array(
+      'template' => 'templates/s-1',
+    ),
+    's_2' => array(
+      'template' => 'templates/s-2',
+    ),
+    's_3' => array(
+      'template' => 'templates/s-3',
+    ),
+    's_4' => array(
+      'template' => 'templates/s-4',
+    ),
+    's_5' => array(
+      'template' => 'templates/s-5',
+    ),
+  );
+}
+  /**
+   * Implements page call back function.
+   */
+function blog_page11() {
+  $value  = theme_get_setting('show_default_blog_type');
+  if ($value == 0) {
+    return theme('s_1');
+  }
+  elseif ($value == 1) {
+    return theme('s_2');
+  }
+  elseif ($value == 2) {
+    return theme('s_3');
+  }
+  elseif ($value == 3) {
+    return theme('s_4');
+  }
+  elseif ($value == 4) {
+    return theme('s_5');
+  }
+}
